@@ -15,6 +15,7 @@ export function Hero() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-charcoal">
+      {/* Mobile: Hero Image */}
       <div className="absolute inset-0 md:hidden">
         <img
           src="/hero/hero.png"
@@ -24,6 +25,7 @@ export function Hero() {
         <div className="absolute inset-0 bg-gradient-to-b from-charcoal/70 via-charcoal/50 to-charcoal/90" />
       </div>
 
+      {/* Desktop: Hero Video */}
       <div className="hidden md:block absolute inset-0">
         <video
           autoPlay
