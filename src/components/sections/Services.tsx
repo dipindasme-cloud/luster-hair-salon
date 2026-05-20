@@ -5,7 +5,7 @@ import { useInView } from "@/hooks/useInView";
 import { Button } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Clock, ArrowRight } from "lucide-react";
+import { Clock, ArrowRight, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Category = "all" | "cuts" | "color" | "treatments" | "styling";
@@ -14,8 +14,10 @@ interface Service {
   name: string;
   category: Category;
   price: string;
+  priceFrom: boolean;
   duration: string;
   result: string;
+  includes: string[];
   popular?: boolean;
   image: string;
 }
@@ -25,72 +27,68 @@ const services: Service[] = [
     name: "Signature Cut & Style",
     category: "cuts",
     price: "$85",
+    priceFrom: false,
     duration: "60 min",
-    result: "Precision cut tailored to your face shape and lifestyle",
+    result: "Precision cut tailored to your face shape",
+    includes: ["Consultation", "Shampoo & condition", "Blowout finish"],
     popular: true,
     image: "https://images.unsplash.com/photo-1595476108010-bdfc2ff28550?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    name: "Luxury Blowout",
-    category: "styling",
-    price: "$55",
-    duration: "45 min",
-    result: "Voluminous, salon-fresh finish that lasts for days",
-    image: "https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=600&q=80",
   },
   {
     name: "Balayage & Highlights",
     category: "color",
     price: "$180",
-    duration: "120 min",
-    result: "Natural, sun-kissed dimension with seamless blending",
+    priceFrom: true,
+    duration: "2-3 hrs",
+    result: "Natural, sun-kissed dimension",
+    includes: ["Color consultation", "Hand-painted technique", "Toning & gloss", "Take-home care guide"],
     popular: true,
     image: "https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&w=600&q=80",
+  },
+  {
+    name: "Full Color",
+    category: "color",
+    price: "$150",
+    priceFrom: false,
+    duration: "90 min",
+    result: "Rich, vibrant color with maximum shine",
+    includes: ["Color matching", "Premium formula", "Deep conditioning", "Style finish"],
+    image: "https://images.unsplash.com/photo-1596178060810-72f53ce9a65c?auto=format&fit=crop&w=600&q=80",
   },
   {
     name: "Keratin Smoothing",
     category: "treatments",
     price: "$250",
-    duration: "150 min",
-    result: "Frizz-free, silky smooth hair for up to 12 weeks",
+    priceFrom: false,
+    duration: "2.5 hrs",
+    result: "Frizz-free for up to 12 weeks",
+    includes: ["Hair analysis", "Keratin application", "Heat sealing", "Aftercare instructions"],
     image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80",
   },
   {
-    name: "Deep Conditioning",
-    category: "treatments",
-    price: "$65",
-    duration: "45 min",
-    result: "Intense moisture restoration for dry, damaged hair",
-    image: "https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    name: "Full Color Transformation",
-    category: "color",
-    price: "$150",
-    duration: "90 min",
-    result: "Rich, vibrant color with maximum shine and longevity",
-    image: "https://images.unsplash.com/photo-1596178060810-72f53ce9a65c?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    name: "Bridal Styling",
+    name: "Bridal Package",
     category: "styling",
     price: "$200",
+    priceFrom: false,
     duration: "90 min",
-    result: "Elegant, long-lasting bridal look with trial session",
+    result: "Flawless look that lasts all day",
+    includes: ["Trial session", "Day-of styling", "Touch-up kit", "Emergency support"],
     image: "https://images.unsplash.com/photo-1523419409543-a5e549c1faa8?auto=format&fit=crop&w=600&q=80",
   },
   {
-    name: "Scalp Revival Treatment",
+    name: "Scalp Revival",
     category: "treatments",
     price: "$75",
+    priceFrom: false,
     duration: "60 min",
-    result: "Rejuvenated scalp for healthier, stronger hair growth",
+    result: "Healthier scalp, stronger hair growth",
+    includes: ["Scalp analysis", "Deep cleansing", "Treatment mask", "Massage therapy"],
     image: "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&w=600&q=80",
   },
 ];
 
 const categories: { label: string; value: Category }[] = [
-  { label: "All Services", value: "all" },
+  { label: "All", value: "all" },
   { label: "Cuts", value: "cuts" },
   { label: "Color", value: "color" },
   { label: "Treatments", value: "treatments" },
@@ -108,18 +106,18 @@ export function Services() {
   return (
     <Section ref={ref} id="services" className="bg-ivory">
       <SectionHeading
-        label="Our Services"
-        title="Tailored Treatments for Every Need"
-        subtitle="Each service includes a personal consultation to ensure the perfect result for your unique hair."
+        label="Services & Pricing"
+        title="Find Your Perfect Service"
+        subtitle="Transparent pricing. Every service includes a personal consultation."
       />
 
-      <div className="flex flex-wrap justify-center gap-3 mb-12">
+      <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10 sm:mb-12">
         {categories.map((cat) => (
           <button
             key={cat.value}
             onClick={() => setActiveCategory(cat.value)}
             className={cn(
-              "px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 min-h-[44px]",
+              "px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-sm font-medium transition-all duration-300 min-h-[44px]",
               activeCategory === cat.value
                 ? "bg-charcoal text-ivory"
                 : "bg-warm-beige/30 text-charcoal/70 hover:bg-warm-beige/50"
@@ -130,50 +128,62 @@ export function Services() {
         ))}
       </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
         {filteredServices.map((service, index) => (
           <div
             key={service.name}
             className={cn(
-              "group rounded-2xl bg-soft-cream border border-warm-beige/30 overflow-hidden hover:border-muted-rose/50 hover:shadow-xl transition-all duration-500",
+              "group rounded-2xl bg-soft-cream border border-warm-beige/30 overflow-hidden hover:border-muted-rose/50 hover:shadow-lg transition-all duration-500",
               isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             )}
-            style={{ transitionDelay: `${index * 100}ms` }}
+            style={{ transitionDelay: `${index * 80}ms` }}
           >
-            <div className="relative aspect-[4/3] overflow-hidden">
+            <div className="relative aspect-[16/10] overflow-hidden">
               <img
                 src={service.image}
                 alt={service.name}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/60 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/50 to-transparent" />
               {service.popular && (
                 <span className="absolute top-3 right-3 px-3 py-1 text-xs font-medium bg-muted-rose text-white rounded-full">
-                  Popular
+                  Most Booked
                 </span>
               )}
-              <div className="absolute bottom-3 left-3 right-3">
-                <h3 className="text-lg font-serif text-white drop-shadow-lg">
-                  {service.name}
-                </h3>
-              </div>
             </div>
 
-            <div className="p-5">
-              <p className="text-charcoal/60 text-sm leading-relaxed mb-4">{service.result}</p>
+            <div className="p-5 sm:p-6">
+              <div className="flex items-start justify-between mb-2">
+                <h3 className="text-lg sm:text-xl font-serif text-charcoal">{service.name}</h3>
+              </div>
 
-              <div className="flex items-center justify-between pt-4 border-t border-warm-beige/30">
-                <div className="flex items-center gap-3">
-                  <span className="text-xl font-serif text-charcoal">{service.price}</span>
-                  <span className="flex items-center gap-1 text-xs text-charcoal/50">
-                    <Clock className="w-3.5 h-3.5" />
-                    {service.duration}
+              <p className="text-charcoal/60 text-sm mb-4">{service.result}</p>
+
+              <div className="flex items-center gap-3 mb-4 pb-4 border-b border-warm-beige/30">
+                <div>
+                  <span className="text-2xl font-serif text-charcoal">
+                    {service.priceFrom ? "From " : ""}{service.price}
                   </span>
                 </div>
-                <Button variant="ghost" size="sm" className="opacity-0 group-hover:opacity-100 transition-opacity">
-                  Book <ArrowRight className="ml-1 w-3 h-3" />
-                </Button>
+                <span className="flex items-center gap-1 text-sm text-charcoal/50">
+                  <Clock className="w-3.5 h-3.5" />
+                  {service.duration}
+                </span>
               </div>
+
+              <ul className="space-y-2 mb-5">
+                {service.includes.map((item) => (
+                  <li key={item} className="flex items-center gap-2 text-sm text-charcoal/70">
+                    <Check className="w-3.5 h-3.5 text-muted-rose flex-shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+
+              <Button variant="outline" size="sm" className="w-full group/btn">
+                Book Now
+                <ArrowRight className="ml-1.5 w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-1" />
+              </Button>
             </div>
           </div>
         ))}
