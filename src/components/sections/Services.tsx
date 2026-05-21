@@ -3,9 +3,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { useInView } from "@/hooks/useInView";
 import { Section } from "@/components/ui/Section";
-import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
-import { ChevronLeft, ChevronRight, Clock, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface ServiceImage {
   src: string;
@@ -14,184 +13,151 @@ interface ServiceImage {
 
 interface Service {
   name: string;
-  category: string;
   price: string;
   priceFrom: boolean;
-  duration: string;
   description: string;
-  includes: string[];
-  popular?: boolean;
   images: ServiceImage[];
 }
 
 const services: Service[] = [
   {
-    name: "Signature Cut & Style",
-    category: "cuts",
-    price: "$85",
-    priceFrom: false,
-    duration: "60 min",
-    description: "Precision cut tailored to your face shape and lifestyle",
-    includes: ["Consultation", "Shampoo & condition", "Blowout finish"],
-    popular: true,
-    images: [
-      { src: "https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=600&q=80", alt: "Signature cut front view" },
-      { src: "https://images.unsplash.com/photo-1595476108010-bdfc2ff28550?auto=format&fit=crop&w=600&q=80", alt: "Signature cut side view" },
-      { src: "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=600&q=80", alt: "Signature cut back view" },
-    ],
-  },
-  {
-    name: "Balayage & Highlights",
-    category: "color",
-    price: "$180",
+    name: "Deep Conditioning",
+    price: "$99",
     priceFrom: true,
-    duration: "2-3 hrs",
-    description: "Natural, sun-kissed dimension with hand-painted technique",
-    includes: ["Color consultation", "Hand-painted technique", "Toning & gloss", "Take-home care guide"],
-    popular: true,
+    description: "Transform your hair with proper care from our skilled stylists, who specialize in restoring moisture and shine.",
     images: [
-      { src: "https://images.unsplash.com/photo-1560869713-da86a9ec0744?auto=format&fit=crop&w=600&q=80", alt: "Balayage result 1" },
-      { src: "https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&w=600&q=80", alt: "Balayage result 2" },
-      { src: "https://images.unsplash.com/photo-1595476108010-bdfc2ff28550?auto=format&fit=crop&w=600&q=80", alt: "Balayage result 3" },
+      { src: "https://images.unsplash.com/photo-1560869713-da86a9ec0744?auto=format&fit=crop&w=600&q=80", alt: "Deep conditioning treatment" },
+      { src: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80", alt: "Hair treatment process" },
+      { src: "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&w=600&q=80", alt: "Conditioning result" },
     ],
   },
   {
-    name: "Full Color",
-    category: "color",
-    price: "$150",
-    priceFrom: false,
-    duration: "90 min",
-    description: "Rich, vibrant color with maximum shine and depth",
-    includes: ["Color matching", "Premium formula", "Deep conditioning", "Style finish"],
+    name: "Precision Haircuts",
+    price: "$99",
+    priceFrom: true,
+    description: "Enhance your look with a perfectly tailored cut and styling that complements your features.",
     images: [
-      { src: "https://images.unsplash.com/photo-1596178060810-72f53ce9a65c?auto=format&fit=crop&w=600&q=80", alt: "Full color result 1" },
-      { src: "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=600&q=80", alt: "Full color result 2" },
-      { src: "https://images.unsplash.com/photo-1560869713-da86a9ec0744?auto=format&fit=crop&w=600&q=80", alt: "Full color result 3" },
+      { src: "https://images.unsplash.com/photo-1595476108010-bdfc2ff28550?auto=format&fit=crop&w=600&q=80", alt: "Precision haircut" },
+      { src: "https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=600&q=80", alt: "Haircut styling" },
+      { src: "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=600&q=80", alt: "Finished haircut" },
+    ],
+  },
+  {
+    name: "Customized Hair Coloring",
+    price: "$79",
+    priceFrom: true,
+    description: "Achieve rich, dimensional color that complements your style and enhances your natural beauty.",
+    images: [
+      { src: "https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&w=600&q=80", alt: "Hair coloring process" },
+      { src: "https://images.unsplash.com/photo-1596178060810-72f53ce9a65c?auto=format&fit=crop&w=600&q=80", alt: "Color application" },
+      { src: "https://images.unsplash.com/photo-1560869713-da86a9ec0744?auto=format&fit=crop&w=600&q=80", alt: "Coloring result" },
     ],
   },
   {
     name: "Keratin Smoothing",
-    category: "treatments",
     price: "$250",
     priceFrom: false,
-    duration: "2.5 hrs",
-    description: "Frizz-free smooth hair for up to 12 weeks",
-    includes: ["Hair analysis", "Keratin application", "Heat sealing", "Aftercare instructions"],
+    description: "Frizz-free smooth hair for up to 12 weeks with our premium keratin treatment.",
     images: [
-      { src: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80", alt: "Keratin result 1" },
-      { src: "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&w=600&q=80", alt: "Keratin result 2" },
-      { src: "https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=600&q=80", alt: "Keratin result 3" },
+      { src: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80", alt: "Keratin treatment" },
+      { src: "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&w=600&q=80", alt: "Smoothing process" },
+      { src: "https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=600&q=80", alt: "Smooth hair result" },
     ],
   },
   {
-    name: "Bridal Package",
-    category: "styling",
+    name: "Bridal Styling",
     price: "$200",
     priceFrom: false,
-    duration: "90 min",
-    description: "Flawless bridal look that lasts all day and night",
-    includes: ["Trial session", "Day-of styling", "Touch-up kit", "Emergency support"],
+    description: "Flawless bridal look that lasts all day and night, including trial session.",
     images: [
-      { src: "https://images.unsplash.com/photo-1523419409543-a5e549c1faa8?auto=format&fit=crop&w=600&q=80", alt: "Bridal styling 1" },
-      { src: "https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=600&q=80", alt: "Bridal styling 2" },
-      { src: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80", alt: "Bridal styling 3" },
+      { src: "https://images.unsplash.com/photo-1523419409543-a5e549c1faa8?auto=format&fit=crop&w=600&q=80", alt: "Bridal hairstyle" },
+      { src: "https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=600&q=80", alt: "Bridal styling" },
+      { src: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80", alt: "Wedding hair" },
     ],
   },
 ];
 
-function ServiceCard({ service, isActive, onBook }: { service: Service; isActive: boolean; onBook: () => void }) {
-  const [currentImage, setCurrentImage] = useState(0);
-
+function ServiceCard({ service, isActive, imageIndex, onPrevImage, onNextImage, onSetImage }: {
+  service: Service;
+  isActive: boolean;
+  imageIndex: number;
+  onPrevImage: () => void;
+  onNextImage: () => void;
+  onSetImage: (index: number) => void;
+}) {
   return (
-    <div
-      className={cn(
-        "group relative rounded-2xl overflow-hidden bg-surface border border-border transition-all duration-500",
-        isActive
-          ? "scale-100 shadow-lg z-10"
-          : "scale-[0.92] opacity-60 z-0"
-      )}
-    >
-      {/* Foggy overlay on inactive cards */}
-      {!isActive && (
-        <div className="absolute inset-0 bg-foreground/20 backdrop-blur-[2px] z-20 pointer-events-none" />
-      )}
+    <div className="group">
+      {/* Image Container */}
+      <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-5">
+        {/* Images */}
+        {service.images.map((img, index) => (
+          <img
+            key={index}
+            src={img.src}
+            alt={img.alt}
+            className={cn(
+              "absolute inset-0 w-full h-full object-cover transition-opacity duration-500",
+              imageIndex === index ? "opacity-100" : "opacity-0"
+            )}
+          />
+        ))}
 
-      <div className="p-5 sm:p-6">
-        {/* Image Carousel */}
-        <div className="relative aspect-[4/3] rounded-xl overflow-hidden mb-5">
-          {service.images.map((img, index) => (
-            <img
-              key={index}
-              src={img.src}
-              alt={img.alt}
-              className={cn(
-                "absolute inset-0 w-full h-full object-cover transition-opacity duration-500",
-                currentImage === index ? "opacity-100" : "opacity-0"
-              )}
-            />
-          ))}
-
-          {/* Image dots */}
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
-            {service.images.map((_, index) => (
-              <button
-                key={index}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setCurrentImage(index);
-                }}
-                className={cn(
-                  "w-2 h-2 rounded-full transition-all duration-300",
-                  currentImage === index
-                    ? "bg-white w-4"
-                    : "bg-white/50 hover:bg-white/70"
-                )}
-                aria-label={`View image ${index + 1}`}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Popular badge */}
-        {service.popular && (
-          <span className="inline-block px-3 py-1 text-xs font-semibold bg-foreground text-background rounded-full mb-3">
-            Most Booked
-          </span>
+        {/* Foggy overlay for inactive cards */}
+        {!isActive && (
+          <div className="absolute inset-0 bg-white/40 backdrop-blur-[1px] z-10" />
         )}
 
-        {/* Service Info */}
-        <h3 className="text-xl font-serif font-medium text-foreground mb-2">{service.name}</h3>
-        <p className="text-[15px] text-foreground/75 leading-relaxed mb-4">{service.description}</p>
-
-        {/* Price & Duration */}
-        <div className="flex items-center gap-3 mb-4 pb-4 border-b border-border/30">
-          <div className="flex items-baseline gap-1">
-            {service.priceFrom && (
-              <span className="text-sm text-foreground/60 font-sans">From </span>
-            )}
-            <span className="text-2xl font-serif font-medium text-foreground">{service.price}</span>
-          </div>
-          <span className="flex items-center gap-1 text-sm text-foreground/70">
-            <Clock className="w-3.5 h-3.5" />
-            {service.duration}
-          </span>
+        {/* Price Badge */}
+        <div className={cn(
+          "absolute top-4 right-4 z-20 px-4 py-1.5 rounded-full text-sm font-semibold",
+          isActive ? "bg-orange-500 text-white" : "bg-orange-500/60 text-white/80"
+        )}>
+          {service.priceFrom ? "From " : ""}{service.price}
         </div>
 
-        {/* Includes */}
-        <ul className="space-y-2 mb-5">
-          {service.includes.map((item) => (
-            <li key={item} className="flex items-center gap-2 text-sm text-foreground/80">
-              <span className="w-1.5 h-1.5 rounded-full bg-accent-soft flex-shrink-0" />
-              {item}
-            </li>
-          ))}
-        </ul>
+        {/* Navigation Arrows */}
+        <div className={cn(
+          "absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-3 z-20 transition-opacity duration-300",
+          isActive ? "opacity-0 group-hover:opacity-100" : "opacity-0"
+        )}>
+          <button
+            onClick={(e) => { e.stopPropagation(); onPrevImage(); }}
+            className="w-9 h-9 rounded-full bg-black/20 backdrop-blur-sm flex items-center justify-center hover:bg-black/30 transition-colors"
+            aria-label="Previous image"
+          >
+            <ChevronLeft className="w-5 h-5 text-white" />
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); onNextImage(); }}
+            className="w-9 h-9 rounded-full bg-black/20 backdrop-blur-sm flex items-center justify-center hover:bg-black/30 transition-colors"
+            aria-label="Next image"
+          >
+            <ChevronRight className="w-5 h-5 text-white" />
+          </button>
+        </div>
 
-        {/* Book Button */}
-        <Button variant="outline" size="sm" className="w-full group/btn" onClick={onBook}>
-          Book Appointment
-          <ArrowRight className="ml-1.5 w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-1" />
-        </Button>
+        {/* Image Dots */}
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
+          {service.images.map((_, index) => (
+            <button
+              key={index}
+              onClick={(e) => { e.stopPropagation(); onSetImage(index); }}
+              className={cn(
+                "w-2 h-2 rounded-full transition-all duration-300",
+                imageIndex === index
+                  ? "bg-white w-4"
+                  : "bg-white/50 hover:bg-white/70"
+              )}
+              aria-label={`View image ${index + 1}`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Text Content */}
+      <div className={cn("transition-opacity duration-500", isActive ? "opacity-100" : "opacity-50")}>
+        <h3 className="text-xl font-serif text-foreground mb-2">{service.name}</h3>
+        <p className="text-[15px] text-foreground/70 leading-relaxed">{service.description}</p>
       </div>
     </div>
   );
@@ -199,17 +165,9 @@ function ServiceCard({ service, isActive, onBook }: { service: Service; isActive
 
 export function Services() {
   const { ref, isInView } = useInView();
-  const [currentIndex, setCurrentIndex] = useState(1); // Start at middle
+  const [currentIndex, setCurrentIndex] = useState(1);
   const [isHovered, setIsHovered] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Detect mobile
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+  const [imageIndices, setImageIndices] = useState<number[]>(services.map(() => 0));
 
   const nextSlide = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % services.length);
@@ -219,23 +177,33 @@ export function Services() {
     setCurrentIndex((prev) => (prev - 1 + services.length) % services.length);
   }, []);
 
-  // Auto-advance on mobile
-  useEffect(() => {
-    if (!isMobile || isHovered) return;
-    const timer = setInterval(nextSlide, 4000);
-    return () => clearInterval(timer);
-  }, [isMobile, isHovered, nextSlide]);
-
-  const scrollToContact = () => {
-    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+  const updateImageIndex = (serviceIndex: number, action: "next" | "prev" | "set", value?: number) => {
+    setImageIndices((prev) => {
+      const newIndices = [...prev];
+      const current = newIndices[serviceIndex] || 0;
+      if (action === "next") {
+        newIndices[serviceIndex] = (current + 1) % services[serviceIndex].images.length;
+      } else if (action === "prev") {
+        newIndices[serviceIndex] = (current - 1 + services[serviceIndex].images.length) % services[serviceIndex].images.length;
+      } else if (action === "set" && value !== undefined) {
+        newIndices[serviceIndex] = value;
+      }
+      return newIndices;
+    });
   };
 
-  // Get visible cards
+  // Auto-advance
+  useEffect(() => {
+    if (isHovered) return;
+    const timer = setInterval(nextSlide, 4000);
+    return () => clearInterval(timer);
+  }, [isHovered, nextSlide]);
+
   const getVisibleCards = () => {
     const cards = [];
     for (let i = -1; i <= 1; i++) {
       const index = (currentIndex + i + services.length) % services.length;
-      cards.push({ service: services[index], index, isActive: i === 0 });
+      cards.push({ service: services[index], globalIndex: index, isActive: i === 0 });
     }
     return cards;
   };
@@ -263,69 +231,41 @@ export function Services() {
         onMouseLeave={() => setIsHovered(false)}
       >
         {/* Desktop: 3 cards */}
-        <div className="hidden md:flex items-center justify-center gap-4 lg:gap-6">
-          {/* Prev Button */}
-          <button
-            onClick={prevSlide}
-            className="absolute left-0 lg:left-4 z-30 w-12 h-12 rounded-full bg-background/80 backdrop-blur-sm border border-border flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-background"
-            aria-label="Previous service"
-          >
-            <ChevronLeft className="w-5 h-5 text-foreground" />
-          </button>
-
-          {/* Cards */}
-          <div className="flex items-center justify-center gap-4 lg:gap-6 w-full max-w-5xl">
-            {getVisibleCards().map(({ service, index, isActive }) => (
-              <div
-                key={`${service.name}-${index}`}
-                className={cn(
-                  "transition-all duration-500 flex-shrink-0",
-                  isActive ? "w-[320px] lg:w-[380px]" : "w-[260px] lg:w-[300px]"
-                )}
-              >
-                <ServiceCard service={service} isActive={isActive} onBook={scrollToContact} />
-              </div>
-            ))}
-          </div>
-
-          {/* Next Button */}
-          <button
-            onClick={nextSlide}
-            className="absolute right-0 lg:right-4 z-30 w-12 h-12 rounded-full bg-background/80 backdrop-blur-sm border border-border flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-background"
-            aria-label="Next service"
-          >
-            <ChevronRight className="w-5 h-5 text-foreground" />
-          </button>
+        <div className="hidden md:flex items-center justify-center gap-6 lg:gap-8 max-w-5xl mx-auto">
+          {getVisibleCards().map(({ service, globalIndex, isActive }) => (
+            <div
+              key={`${service.name}-${globalIndex}`}
+              className={cn(
+                "transition-all duration-500 flex-shrink-0",
+                isActive ? "w-[340px] lg:w-[380px] scale-100" : "w-[280px] lg:w-[300px] scale-[0.92]"
+              )}
+            >
+              <ServiceCard
+                service={service}
+                isActive={isActive}
+                imageIndex={imageIndices[globalIndex]}
+                onPrevImage={() => updateImageIndex(globalIndex, "prev")}
+                onNextImage={() => updateImageIndex(globalIndex, "next")}
+                onSetImage={(idx) => updateImageIndex(globalIndex, "set", idx)}
+              />
+            </div>
+          ))}
         </div>
 
-        {/* Mobile: 1 card with swipe */}
-        <div className="md:hidden relative">
-          {/* Prev Button */}
-          <button
-            onClick={prevSlide}
-            className="absolute left-2 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm border border-border flex items-center justify-center opacity-0 active:opacity-100 transition-opacity"
-            aria-label="Previous service"
-          >
-            <ChevronLeft className="w-4 h-4 text-foreground" />
-          </button>
-
-          {/* Active Card */}
-          <div className="w-full max-w-sm mx-auto">
-            <ServiceCard service={services[currentIndex]} isActive={true} onBook={scrollToContact} />
-          </div>
-
-          {/* Next Button */}
-          <button
-            onClick={nextSlide}
-            className="absolute right-2 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm border border-border flex items-center justify-center opacity-0 active:opacity-100 transition-opacity"
-            aria-label="Next service"
-          >
-            <ChevronRight className="w-4 h-4 text-foreground" />
-          </button>
+        {/* Mobile: 1 card */}
+        <div className="md:hidden max-w-sm mx-auto">
+          <ServiceCard
+            service={services[currentIndex]}
+            isActive={true}
+            imageIndex={imageIndices[currentIndex]}
+            onPrevImage={() => updateImageIndex(currentIndex, "prev")}
+            onNextImage={() => updateImageIndex(currentIndex, "next")}
+            onSetImage={(idx) => updateImageIndex(currentIndex, "set", idx)}
+          />
         </div>
 
         {/* Navigation Dots */}
-        <div className="flex justify-center gap-2 mt-8">
+        <div className="flex justify-center gap-2 mt-10">
           {services.map((_, index) => (
             <button
               key={index}
