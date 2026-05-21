@@ -135,7 +135,7 @@ export function Services() {
 
       <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5 sm:gap-6">
         {filteredServices.map((service, index) => {
-          const Icon = categoryIcons[service.category];
+          const Icon = categoryIcons[service.category as Exclude<Category, "all">];
           return (
             <div
               key={service.name}
