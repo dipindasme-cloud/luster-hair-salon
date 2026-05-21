@@ -38,7 +38,7 @@ export function WhyChooseUs() {
   return (
     <Section ref={ref} id="about" className="bg-foreground text-background">
       <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-        <div className={`transition-all duration-700 ${isInView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"}`}>
+        <div className={`transition-all duration-500 ${isInView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}>
           <span className="inline-block text-accent-soft text-sm font-semibold tracking-widest uppercase mb-4">
             Why Luster
           </span>
@@ -59,7 +59,7 @@ export function WhyChooseUs() {
                 className={`flex gap-4 transition-all duration-500 ${
                   isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 }`}
-                style={{ transitionDelay: `${300 + index * 150}ms` }}
+                style={{ transitionDelay: `${200 + index * 100}ms` }}
               >
                 <div className="flex-shrink-0 w-12 h-12 rounded-full bg-accent-soft/20 flex items-center justify-center">
                   <reason.icon className="w-5 h-5 text-accent-soft" />
@@ -72,7 +72,7 @@ export function WhyChooseUs() {
             ))}
           </div>
 
-          <div className={`mt-10 transition-all duration-500 delay-700 ${isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+          <div className={`mt-10 transition-all duration-500 delay-500 ${isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
             <Button variant="outlineLight" className="group" onClick={scrollToContact}>
               Book Appointment
               <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -80,7 +80,7 @@ export function WhyChooseUs() {
           </div>
         </div>
 
-        <div className={`grid grid-cols-2 gap-4 transition-all duration-700 delay-300 ${isInView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}>
+        <div className={`grid grid-cols-2 gap-4 transition-all duration-500 delay-200 ${isInView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4"}`}>
           <div className="space-y-4">
             <div className="aspect-[3/4] rounded-2xl overflow-hidden">
               <img

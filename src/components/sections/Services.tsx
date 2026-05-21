@@ -5,10 +5,17 @@ import { useInView } from "@/hooks/useInView";
 import { Button } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Clock, ArrowRight, Check } from "lucide-react";
+import { Clock, ArrowRight, Check, Scissors, Palette, Droplets, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Category = "all" | "cuts" | "color" | "treatments" | "styling";
+
+const categoryIcons = {
+  cuts: Scissors,
+  color: Palette,
+  treatments: Droplets,
+  styling: Sparkles,
+};
 
 interface Service {
   name: string;
@@ -19,7 +26,6 @@ interface Service {
   result: string;
   includes: string[];
   popular?: boolean;
-  image: string;
 }
 
 const services: Service[] = [
@@ -32,7 +38,6 @@ const services: Service[] = [
     result: "Precision cut tailored to your face shape",
     includes: ["Consultation", "Shampoo & condition", "Blowout finish"],
     popular: true,
-    image: "https://images.unsplash.com/photo-1595476108010-bdfc2ff28550?auto=format&fit=crop&w=600&q=80",
   },
   {
     name: "Balayage & Highlights",
@@ -43,7 +48,6 @@ const services: Service[] = [
     result: "Natural, sun-kissed dimension",
     includes: ["Color consultation", "Hand-painted technique", "Toning & gloss", "Take-home care guide"],
     popular: true,
-    image: "https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&w=600&q=80",
   },
   {
     name: "Full Color",
@@ -53,7 +57,6 @@ const services: Service[] = [
     duration: "90 min",
     result: "Rich, vibrant color with maximum shine",
     includes: ["Color matching", "Premium formula", "Deep conditioning", "Style finish"],
-    image: "https://images.unsplash.com/photo-1596178060810-72f53ce9a65c?auto=format&fit=crop&w=600&q=80",
   },
   {
     name: "Keratin Smoothing",
@@ -63,7 +66,6 @@ const services: Service[] = [
     duration: "2.5 hrs",
     result: "Frizz-free for up to 12 weeks",
     includes: ["Hair analysis", "Keratin application", "Heat sealing", "Aftercare instructions"],
-    image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80",
   },
   {
     name: "Bridal Package",
@@ -73,7 +75,6 @@ const services: Service[] = [
     duration: "90 min",
     result: "Flawless look that lasts all day",
     includes: ["Trial session", "Day-of styling", "Touch-up kit", "Emergency support"],
-    image: "https://images.unsplash.com/photo-1523419409543-a5e549c1faa8?auto=format&fit=crop&w=600&q=80",
   },
   {
     name: "Scalp Revival",
@@ -83,7 +84,6 @@ const services: Service[] = [
     duration: "60 min",
     result: "Healthier scalp, stronger hair growth",
     includes: ["Scalp analysis", "Deep cleansing", "Treatment mask", "Massage therapy"],
-    image: "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&w=600&q=80",
   },
 ];
 
@@ -134,63 +134,64 @@ export function Services() {
       </div>
 
       <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5 sm:gap-6">
-        {filteredServices.map((service, index) => (
-          <div
-            key={service.name}
-            className={cn(
-              "group rounded-2xl bg-surface border border-border overflow-hidden hover:border-accent-soft/50 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-500",
-              isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            )}
-            style={{ transitionDelay: `${index * 80}ms` }}
-          >
-            <div className="relative aspect-[16/10] overflow-hidden">
-              <img
-                src={service.image}
-                alt={service.name}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 to-transparent" />
-              {service.popular && (
-                <span className="absolute top-3 right-3 px-3 py-1 text-xs font-semibold bg-foreground text-background rounded-full">
-                  Most Booked
-                </span>
+        {filteredServices.map((service, index) => {
+          const Icon = categoryIcons[service.category];
+          return (
+            <div
+              key={service.name}
+              className={cn(
+                "group rounded-2xl bg-surface border border-border overflow-hidden hover:border-accent-soft/50 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-500",
+                isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               )}
-            </div>
-
-            <div className="p-5 sm:p-6">
-              <h3 className="text-xl font-serif font-medium text-foreground mb-2">{service.name}</h3>
-
-              <p className="text-[15px] text-foreground/75 leading-relaxed mb-4">{service.result}</p>
-
-              <div className="flex items-center gap-3 mb-4 pb-4 border-b border-border/30">
-                <div className="flex items-baseline gap-1">
-                  {service.priceFrom && (
-                    <span className="text-sm text-foreground/60 font-sans">From </span>
-                  )}
-                  <span className="text-2xl font-serif font-medium text-foreground">{service.price}</span>
+              style={{ transitionDelay: `${index * 80}ms` }}
+            >
+              <div className="p-6 sm:p-8">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-foreground/5 flex items-center justify-center">
+                      <Icon className="w-4 h-4 text-foreground/60" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-serif font-medium text-foreground">{service.name}</h3>
+                      {service.popular && (
+                        <span className="text-xs font-medium text-accent">Most Booked</span>
+                      )}
+                    </div>
+                  </div>
                 </div>
-                <span className="flex items-center gap-1 text-sm text-foreground/70">
-                  <Clock className="w-3.5 h-3.5" />
-                  {service.duration}
-                </span>
+
+                <p className="text-[15px] text-foreground/75 leading-relaxed mb-5">{service.result}</p>
+
+                <div className="flex items-center gap-3 mb-5 pb-5 border-b border-border/30">
+                  <div className="flex items-baseline gap-1">
+                    {service.priceFrom && (
+                      <span className="text-sm text-foreground/60 font-sans">From </span>
+                    )}
+                    <span className="text-2xl font-serif font-medium text-foreground">{service.price}</span>
+                  </div>
+                  <span className="flex items-center gap-1 text-sm text-foreground/70">
+                    <Clock className="w-3.5 h-3.5" />
+                    {service.duration}
+                  </span>
+                </div>
+
+                <ul className="space-y-2.5 mb-6">
+                  {service.includes.map((item) => (
+                    <li key={item} className="flex items-center gap-2.5 text-sm text-foreground/80">
+                      <Check className="w-3.5 h-3.5 text-accent-soft flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+
+                <Button variant="outline" size="sm" className="w-full group/btn" onClick={scrollToContact}>
+                  Book Appointment
+                  <ArrowRight className="ml-1.5 w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-1" />
+                </Button>
               </div>
-
-              <ul className="space-y-2 mb-5">
-                {service.includes.map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-sm text-foreground/80">
-                    <Check className="w-3.5 h-3.5 text-accent-soft flex-shrink-0" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-
-              <Button variant="outline" size="sm" className="w-full group/btn" onClick={scrollToContact}>
-                Book Appointment
-                <ArrowRight className="ml-1.5 w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-1" />
-              </Button>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </Section>
   );

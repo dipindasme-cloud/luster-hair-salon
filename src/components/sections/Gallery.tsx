@@ -1,12 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { useInView } from "@/hooks/useInView";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { cn } from "@/lib/utils";
-
-type View = "before" | "after";
 
 interface GalleryItem {
   id: number;
@@ -48,7 +44,6 @@ const galleryItems: GalleryItem[] = [
 ];
 
 export function Gallery() {
-  const [activeView, setActiveView] = useState<View>("after");
   const { ref, isInView } = useInView();
 
   return (
@@ -56,66 +51,45 @@ export function Gallery() {
       <SectionHeading
         label="Real Results"
         title="See the Transformations"
-        subtitle="Every photo is an actual client result. Toggle between before and after."
+        subtitle="Every photo is an actual client result."
       />
 
-      <div className="flex justify-center gap-4 mb-10">
-        <button
-          onClick={() => setActiveView("before")}
-          aria-pressed={activeView === "before"}
-          className={cn(
-            "px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 min-h-[44px]",
-            activeView === "before"
-              ? "bg-foreground text-background"
-              : "bg-border/30 text-foreground/70 hover:bg-border/50"
-          )}
-        >
-          Before
-        </button>
-        <button
-          onClick={() => setActiveView("after")}
-          aria-pressed={activeView === "after"}
-          className={cn(
-            "px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 min-h-[44px]",
-            activeView === "after"
-              ? "bg-foreground text-background"
-              : "bg-border/30 text-foreground/70 hover:bg-border/50"
-          )}
-        >
-          After
-        </button>
-      </div>
-
-      <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-5">
+      <div className="grid md:grid-cols-2 gap-5 sm:gap-6">
         {galleryItems.map((item, index) => (
           <div
             key={item.id}
             className={`group rounded-2xl overflow-hidden bg-surface border border-border hover:shadow-lg hover:-translate-y-0.5 transition-all duration-500 ${
-              isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
             style={{ transitionDelay: `${index * 100}ms` }}
           >
-            <div className="relative aspect-[3/4] overflow-hidden">
-              <img
-                src={activeView === "before" ? item.before : item.after}
-                alt={`${item.label} - ${activeView}`}
-                className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
-              <div className="absolute top-3 left-3">
-                <span className={cn(
-                  "px-3 py-1 text-xs font-medium rounded-full",
-                  activeView === "before"
-                    ? "bg-white/90 text-foreground"
-                    : "bg-accent-soft text-white"
-                )}>
-                  {activeView === "before" ? "Before" : "After"}
+            <div className="grid grid-cols-2">
+              <div className="relative aspect-[3/4] overflow-hidden">
+                <img
+                  src={item.before}
+                  alt={`${item.label} - Before`}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 to-transparent" />
+                <span className="absolute top-3 left-3 px-2.5 py-1 text-xs font-medium bg-white/90 text-foreground rounded-full">
+                  Before
                 </span>
               </div>
-              <div className="absolute bottom-0 left-0 right-0 p-4">
-                <h3 className="text-lg font-serif text-white">{item.label}</h3>
-                <p className="text-white/70 text-sm">{item.service}</p>
+              <div className="relative aspect-[3/4] overflow-hidden">
+                <img
+                  src={item.after}
+                  alt={`${item.label} - After`}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 to-transparent" />
+                <span className="absolute top-3 left-3 px-2.5 py-1 text-xs font-medium bg-accent-soft text-white rounded-full">
+                  After
+                </span>
               </div>
+            </div>
+            <div className="p-4 sm:p-5">
+              <h3 className="text-lg font-serif text-foreground">{item.label}</h3>
+              <p className="text-foreground/60 text-sm">{item.service}</p>
             </div>
           </div>
         ))}

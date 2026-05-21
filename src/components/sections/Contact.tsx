@@ -5,7 +5,7 @@ import { useInView } from "@/hooks/useInView";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { FormInput, FormSelect, FormTextarea, FormField } from "@/components/ui/Form";
-import { MapPin, Phone, Mail, Clock, ArrowRight, CheckCircle, Loader2 } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, ArrowRight, CheckCircle, Loader2, Shield } from "lucide-react";
 
 const contactInfo = [
   {
@@ -71,7 +71,7 @@ export function Contact() {
   return (
     <Section ref={ref} id="contact" className="bg-foreground text-background">
       <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
-        <div className={`transition-all duration-700 ${isInView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"}`}>
+        <div className={`transition-all duration-500 ${isInView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}>
           <span className="inline-block text-accent-soft text-sm font-semibold tracking-widest uppercase mb-4">
             Book Now
           </span>
@@ -84,7 +84,7 @@ export function Contact() {
             consultation with their first visit.
           </p>
 
-          <div className="grid sm:grid-cols-2 gap-6 mb-10">
+          <div className="grid sm:grid-cols-2 gap-6 mb-8">
             {contactInfo.map((info) => (
               <div key={info.label} className="flex gap-3">
                 <div className="flex-shrink-0 w-10 h-10 rounded-full bg-background/10 flex items-center justify-center">
@@ -97,6 +97,16 @@ export function Contact() {
               </div>
             ))}
           </div>
+
+          <a
+            href="https://maps.google.com/?q=123+Elegance+Avenue+Beverly+Hills+CA+90210"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-sm text-accent-soft hover:text-background transition-colors mb-10"
+          >
+            <MapPin className="w-3.5 h-3.5" />
+            Get Directions
+          </a>
 
           <div className="flex flex-wrap gap-3">
             <Button variant="inverse" size="lg" className="group" onClick={() => document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" })}>
@@ -113,7 +123,7 @@ export function Contact() {
           </div>
         </div>
 
-        <div className={`transition-all duration-700 delay-300 ${isInView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}>
+        <div className={`transition-all duration-500 delay-200 ${isInView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4"}`}>
           <div className="bg-background/5 rounded-2xl p-6 sm:p-8 border border-background/10">
             <h3 className="text-xl font-serif mb-6">Request an Appointment</h3>
 
@@ -190,6 +200,11 @@ export function Contact() {
                     placeholder="Tell us about your hair goals..."
                   />
                 </FormField>
+
+                <p className="text-background/50 text-xs text-center leading-relaxed">
+                  This is a request, not a confirmed booking. We'll call or text you within 24 hours to confirm your date and time.
+                </p>
+
                 <Button
                   size="lg"
                   className="w-full group"
@@ -200,9 +215,18 @@ export function Contact() {
                   {formState === "submitting" ? (
                     <>Sending... <Loader2 className="ml-2 w-5 h-5 animate-spin" /></>
                   ) : (
-                    <>Request Appointment <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" /></>
+                    <>Send Booking Request <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" /></>
                   )}
                 </Button>
+
+                <div className="flex items-center justify-center gap-4 pt-2">
+                  <div className="flex items-center gap-1.5 text-background/40 text-xs">
+                    <Shield className="w-3 h-3" />
+                    <span>7-day satisfaction guarantee</span>
+                  </div>
+                  <span className="text-background/20">·</span>
+                  <span className="text-background/40 text-xs">Your info is never shared</span>
+                </div>
               </form>
             )}
           </div>

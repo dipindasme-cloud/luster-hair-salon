@@ -1,5 +1,6 @@
 import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/Hero";
+import { TrustStrip } from "@/components/sections/TrustStrip";
 import { Services } from "@/components/sections/Services";
 import { Gallery } from "@/components/sections/Gallery";
 import { Testimonials } from "@/components/sections/Testimonials";
@@ -16,17 +17,32 @@ export default function Home() {
       <Header />
       <main id="main-content">
         <Hero />
+        <TrustStrip />
         <Services />
         <Gallery />
         <Testimonials />
 
+        {/* Inline CTA after Gallery peak interest */}
+        <div className="bg-background border-y border-border/20 py-6 px-4 text-center">
+          <p className="text-foreground/70 text-base">
+            Love these results?{" "}
+            <button
+              onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+              className="text-accent hover:text-foreground font-semibold transition-colors underline underline-offset-4 decoration-accent-soft/40"
+            >
+              Book your transformation →
+            </button>
+          </p>
+        </div>
+
         {/* Mid-page CTA */}
-        <section className="bg-foreground text-background py-16 px-4 sm:px-6 md:px-8 text-center">
+        <section className="bg-foreground text-background py-20 md:py-24 px-4 sm:px-6 md:px-8 text-center">
           <div className="max-w-2xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-serif font-medium mb-4">Ready for Your Transformation?</h2>
-            <p className="text-background/80 mb-6 max-w-xl mx-auto leading-relaxed">Book your free consultation today. New clients receive a complimentary hair assessment.</p>
+            <h2 className="text-3xl md:text-4xl font-serif font-medium mb-4">Not Sure What You Need?</h2>
+            <p className="text-background/80 mb-3 max-w-xl mx-auto leading-relaxed">Every new client starts with a free 15-minute consultation. We'll assess your hair, discuss your goals, and recommend the right service — no pressure, no obligation.</p>
+            <p className="text-background/50 text-sm mb-6">We have 3 openings this week.</p>
             <Button variant="inverse" size="lg" onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}>
-              Book Appointment
+              Book Free Consultation
             </Button>
           </div>
         </section>

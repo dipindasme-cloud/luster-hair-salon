@@ -12,6 +12,7 @@ interface Testimonial {
   rating: number;
   treatment: string;
   stylist: string;
+  stylistInitials: string;
   visits: string;
 }
 
@@ -23,6 +24,7 @@ const testimonials: Testimonial[] = [
     rating: 5,
     treatment: "Color Correction",
     stylist: "Isabella L.",
+    stylistInitials: "IL",
     visits: "Client for 2 years",
   },
   {
@@ -32,6 +34,7 @@ const testimonials: Testimonial[] = [
     rating: 5,
     treatment: "Bridal Styling",
     stylist: "Sophia C.",
+    stylistInitials: "SC",
     visits: "Referred 6 clients",
   },
   {
@@ -41,6 +44,7 @@ const testimonials: Testimonial[] = [
     rating: 5,
     treatment: "Keratin Smoothing",
     stylist: "Aria P.",
+    stylistInitials: "AP",
     visits: "Client for 1 year",
   },
 ];
@@ -61,7 +65,7 @@ export function Testimonials() {
           <div
             key={testimonial.name}
             className={`relative p-6 sm:p-8 rounded-2xl bg-background border border-border hover:shadow-lg hover:-translate-y-0.5 transition-all duration-500 ${
-              isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
             style={{ transitionDelay: `${index * 150}ms` }}
           >
@@ -73,9 +77,16 @@ export function Testimonials() {
               ))}
             </div>
 
-            <p className="text-foreground/80 leading-relaxed mb-6 text-base">
+            <p className="text-foreground/80 leading-relaxed mb-5 text-base">
               {testimonial.content}
             </p>
+
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-8 h-8 rounded-full bg-accent-soft/20 flex items-center justify-center flex-shrink-0">
+                <span className="text-xs font-semibold text-accent">{testimonial.stylistInitials}</span>
+              </div>
+              <span className="text-sm text-foreground/60">Styled by {testimonial.stylist}</span>
+            </div>
 
             <div className="pt-4 border-t border-border/30">
               <div className="flex items-center justify-between mb-2">

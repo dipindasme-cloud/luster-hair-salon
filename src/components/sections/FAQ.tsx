@@ -8,6 +8,10 @@ import { Button } from "@/components/ui/Button";
 
 const faqs = [
   {
+    question: "Are the prices listed final?",
+    answer: "The prices shown are starting points for standard services. Your final price depends on hair length, density, and the complexity of the service. We'll confirm the exact price during your free consultation before any work begins — no surprises.",
+  },
+  {
     question: "How far in advance should I book?",
     answer: "We recommend 1-2 weeks for regular services and 3-4 weeks for bridal or special events. Walk-ins are welcome based on availability, but appointments guarantee your preferred stylist and time.",
   },
@@ -38,7 +42,7 @@ export function FAQ() {
 
   return (
     <Section ref={ref} id="faq" className="bg-surface">
-      <div className={`max-w-3xl mx-auto transition-all duration-700 ${isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+      <div className={`max-w-3xl mx-auto transition-all duration-500 ${isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
         <SectionHeading
           label="Questions?"
           title="Frequently Asked"

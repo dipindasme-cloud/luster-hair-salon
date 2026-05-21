@@ -76,6 +76,10 @@ const team: TeamMember[] = [
 export function Team() {
   const { ref, isInView } = useInView();
 
+  const scrollToContact = () => {
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <Section ref={ref} id="team" className="bg-background">
       <SectionHeading
@@ -89,7 +93,7 @@ export function Team() {
           <div
             key={member.name}
             className={`group rounded-2xl bg-surface border border-border overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-500 ${
-              isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
             style={{ transitionDelay: `${index * 120}ms` }}
           >
@@ -124,6 +128,15 @@ export function Team() {
                 <span>{member.experience}</span>
                 <span>{member.clients} clients</span>
               </div>
+
+              {member.bookable && (
+                <button
+                  onClick={scrollToContact}
+                  className="text-sm text-accent hover:text-foreground transition-colors mt-3 inline-block font-medium"
+                >
+                  Book with {member.name.split(" ")[0]} →
+                </button>
+              )}
             </div>
           </div>
         ))}
