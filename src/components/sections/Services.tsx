@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useInView } from "@/hooks/useInView";
 import { Section } from "@/components/ui/Section";
 import { cn } from "@/lib/utils";
@@ -86,9 +86,9 @@ function ServiceCard({ service, isActive, imageIndex, onPrevImage, onNextImage, 
   onSetImage: (index: number) => void;
 }) {
   return (
-    <div className="group">
+    <div className="group h-full flex flex-col">
       {/* Image Container */}
-      <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-5">
+      <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-5 flex-shrink-0">
         {/* Images */}
         {service.images.map((img, index) => (
           <img
@@ -96,7 +96,7 @@ function ServiceCard({ service, isActive, imageIndex, onPrevImage, onNextImage, 
             src={img.src}
             alt={img.alt}
             className={cn(
-              "absolute inset-0 w-full h-full object-cover transition-opacity duration-500",
+              "absolute inset-0 w-full h-full object-cover transition-opacity duration-300",
               imageIndex === index ? "opacity-100" : "opacity-0"
             )}
           />
@@ -155,7 +155,7 @@ function ServiceCard({ service, isActive, imageIndex, onPrevImage, onNextImage, 
       </div>
 
       {/* Text Content */}
-      <div className={cn("transition-opacity duration-500", isActive ? "opacity-100" : "opacity-50")}>
+      <div className={cn("transition-opacity duration-300 flex-grow", isActive ? "opacity-100" : "opacity-50")}>
         <h3 className="text-xl font-serif text-foreground mb-2">{service.name}</h3>
         <p className="text-[15px] text-foreground/70 leading-relaxed">{service.description}</p>
       </div>
@@ -168,6 +168,20 @@ export function Services() {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [isHovered, setIsHovered] = useState(false);
   const [imageIndices, setImageIndices] = useState<number[]>(services.map(() => 0));
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Swipe state
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Detect mobile
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const nextSlide = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % services.length);
@@ -195,9 +209,26 @@ export function Services() {
   // Auto-advance
   useEffect(() => {
     if (isHovered) return;
-    const timer = setInterval(nextSlide, 4000);
+    const timer = setInterval(nextSlide, 3000);
     return () => clearInterval(timer);
   }, [isHovered, nextSlide]);
+
+  // Swipe handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    const diff = touchStartX.current - touchEndX.current;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) nextSlide();
+      else prevSlide();
+    }
+  };
 
   const getVisibleCards = () => {
     const cards = [];
@@ -224,36 +255,42 @@ export function Services() {
         </p>
       </div>
 
-      {/* Carousel */}
+      {/* Carousel Container - Fixed height to prevent vibration */}
       <div
-        className="relative"
+        ref={containerRef}
+        className="relative overflow-hidden"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
-        {/* Desktop: 3 cards */}
-        <div className="hidden md:flex items-center justify-center gap-6 lg:gap-8 max-w-5xl mx-auto">
-          {getVisibleCards().map(({ service, globalIndex, isActive }) => (
-            <div
-              key={`${service.name}-${globalIndex}`}
-              className={cn(
-                "transition-all duration-500 flex-shrink-0",
-                isActive ? "w-[340px] lg:w-[380px] scale-100" : "w-[280px] lg:w-[300px] scale-[0.92]"
-              )}
-            >
-              <ServiceCard
-                service={service}
-                isActive={isActive}
-                imageIndex={imageIndices[globalIndex]}
-                onPrevImage={() => updateImageIndex(globalIndex, "prev")}
-                onNextImage={() => updateImageIndex(globalIndex, "next")}
-                onSetImage={(idx) => updateImageIndex(globalIndex, "set", idx)}
-              />
-            </div>
-          ))}
+        {/* Desktop: 3 cards in fixed frame */}
+        <div className="hidden md:block relative h-[580px]">
+          <div className="absolute inset-0 flex items-center justify-center gap-6 lg:gap-8 max-w-5xl mx-auto px-4">
+            {getVisibleCards().map(({ service, globalIndex, isActive }) => (
+              <div
+                key={`${service.name}-${globalIndex}`}
+                className={cn(
+                  "transition-all duration-300 flex-shrink-0 h-full",
+                  isActive ? "w-[340px] lg:w-[380px] scale-100" : "w-[280px] lg:w-[300px] scale-[0.92]"
+                )}
+              >
+                <ServiceCard
+                  service={service}
+                  isActive={isActive}
+                  imageIndex={imageIndices[globalIndex]}
+                  onPrevImage={() => updateImageIndex(globalIndex, "prev")}
+                  onNextImage={() => updateImageIndex(globalIndex, "next")}
+                  onSetImage={(idx) => updateImageIndex(globalIndex, "set", idx)}
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Mobile: 1 card */}
-        <div className="md:hidden max-w-sm mx-auto">
+        {/* Mobile: 1 card with swipe */}
+        <div className="md:hidden max-w-sm mx-auto px-4">
           <ServiceCard
             service={services[currentIndex]}
             isActive={true}
@@ -264,19 +301,17 @@ export function Services() {
           />
         </div>
 
-        {/* Navigation Dots */}
-        <div className="flex justify-center gap-2 mt-10">
+        {/* Time Indicator (Non-interactive) */}
+        <div className="flex justify-center gap-2 mt-8">
           {services.map((_, index) => (
-            <button
+            <div
               key={index}
-              onClick={() => setCurrentIndex(index)}
               className={cn(
-                "w-2 h-2 rounded-full transition-all duration-300",
+                "h-1.5 rounded-full transition-all duration-300",
                 currentIndex === index
-                  ? "bg-foreground w-6"
-                  : "bg-foreground/30 hover:bg-foreground/50"
+                  ? "bg-foreground w-8"
+                  : "bg-foreground/20 w-4"
               )}
-              aria-label={`Go to service ${index + 1}`}
             />
           ))}
         </div>
