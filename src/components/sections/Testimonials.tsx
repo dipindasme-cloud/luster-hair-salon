@@ -13,7 +13,7 @@ const testimonials = [
   },
   {
     name: "Olivia Tate",
-    role: "Volume Boost Treatment",
+    role: "Boost Treatment",
     review: "Volume and shine restored! My hair used to feel flat, but after their volumizing treatment, it's full, bouncy, and has that salon-fresh look every single day.",
     image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&q=80",
   },
