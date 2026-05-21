@@ -8,24 +8,24 @@ import { cn } from "@/lib/utils";
 
 const galleryImages = [
   {
-    src: "https://images.unsplash.com/photo-1560869713-da86a9ec0744?auto=format&fit=crop&w=800&q=80",
-    alt: "Balayage hair transformation",
+    src: "/gallery/gallery (1).png",
+    alt: "Luster salon transformation 1",
   },
   {
-    src: "https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=600&q=80",
-    alt: "Precision haircut and style",
+    src: "/gallery/gallery (2).png",
+    alt: "Luster salon transformation 2",
   },
   {
-    src: "https://images.unsplash.com/photo-1595476108010-bdfc2ff28550?auto=format&fit=crop&w=600&q=80",
-    alt: "Full color transformation",
+    src: "/gallery/gallery (3).png",
+    alt: "Luster salon transformation 3",
   },
   {
-    src: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80",
-    alt: "Keratin smoothing treatment",
+    src: "/gallery/gallery (4).png",
+    alt: "Luster salon transformation 4",
   },
   {
-    src: "https://images.unsplash.com/photo-1523419409543-a5e549c1faa8?auto=format&fit=crop&w=600&q=80",
-    alt: "Bridal hair styling",
+    src: "/gallery/gallery (5).png",
+    alt: "Luster salon transformation 5",
   },
 ];
 
