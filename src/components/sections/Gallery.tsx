@@ -76,16 +76,16 @@ export function Gallery() {
         </div>
       </div>
 
-      {/* Gallery Grid — Same 2-column layout on mobile and desktop */}
-      <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5">
-        {/* Cover Image — Left column, spans full height */}
+      {/* Mobile: Cover on top, 2x2 grid below */}
+      <div className="md:hidden space-y-3">
+        {/* Cover Image */}
         <div
           className={cn(
             "group relative rounded-2xl overflow-hidden bg-surface hover:shadow-lg transition-all duration-500",
             isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           )}
         >
-          <div className="relative aspect-[3/4] sm:aspect-[4/5] md:aspect-auto md:h-full min-h-[280px] sm:min-h-[350px] md:min-h-[400px]">
+          <div className="relative aspect-[4/3]">
             <Image
               src={galleryImages[0].src}
               alt={galleryImages[0].alt}
@@ -96,8 +96,52 @@ export function Gallery() {
           </div>
         </div>
 
-        {/* Right Column — 2x2 grid of 4 images */}
-        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5">
+        {/* 2x2 Grid */}
+        <div className="grid grid-cols-2 gap-3">
+          {galleryImages.slice(1).map((image, index) => (
+            <div
+              key={index}
+              className={cn(
+                "group relative rounded-2xl overflow-hidden bg-surface hover:shadow-lg transition-all duration-500",
+                isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              )}
+              style={{ transitionDelay: `${(index + 1) * 100}ms` }}
+            >
+              <div className="relative aspect-square">
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop: Cover left, 2x2 grid right */}
+      <div className="hidden md:grid grid-cols-2 gap-5">
+        {/* Cover Image */}
+        <div
+          className={cn(
+            "group relative rounded-2xl overflow-hidden bg-surface hover:shadow-lg transition-all duration-500",
+            isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          )}
+        >
+          <div className="relative aspect-[3/4] md:aspect-auto md:h-full min-h-[400px]">
+            <Image
+              src={galleryImages[0].src}
+              alt={galleryImages[0].alt}
+              fill
+              priority
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          </div>
+        </div>
+
+        {/* 2x2 Grid */}
+        <div className="grid grid-cols-2 gap-5">
           {galleryImages.slice(1).map((image, index) => (
             <div
               key={index}
