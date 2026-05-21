@@ -97,11 +97,11 @@ function TestimonialCard({ name, role, review, image }: {
 export function Testimonials() {
   const { ref, isInView } = useInView();
 
-  // Column-based data for masonry flow
+  // Column-based data for masonry flow — sequential order
   const columnsData = [
-    [testimonials[0], testimonials[3]],
-    [testimonials[1], testimonials[4]],
-    [testimonials[2], testimonials[5]],
+    [testimonials[0], testimonials[1]], // Column 1: Cards 1, 2
+    [testimonials[2], testimonials[3]], // Column 2: Cards 3, 4
+    [testimonials[4], testimonials[5]], // Column 3: Cards 5, 6
   ];
 
   return (
