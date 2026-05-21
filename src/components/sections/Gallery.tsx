@@ -10,7 +10,6 @@ const galleryImages = [
   {
     src: "https://images.unsplash.com/photo-1560869713-da86a9ec0744?auto=format&fit=crop&w=800&q=80",
     alt: "Balayage hair transformation",
-    span: "md:row-span-2",
   },
   {
     src: "https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=600&q=80",
@@ -77,32 +76,48 @@ export function Gallery() {
         </div>
       </div>
 
-      {/* Masonry Gallery Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5">
-        {galleryImages.map((image, index) => (
-          <div
-            key={index}
-            className={cn(
-              "group relative rounded-2xl overflow-hidden bg-surface hover:shadow-lg transition-all duration-500",
-              image.span,
-              isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            )}
-            style={{ transitionDelay: `${index * 100}ms` }}
-          >
-            <div className={cn(
-              "relative overflow-hidden",
-              image.span ? "aspect-[3/4] md:aspect-auto md:h-full" : "aspect-square"
-            )}>
-              <Image
-                src={image.src}
-                alt={image.alt}
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            </div>
+      {/* Gallery Grid — Same 2-column layout on mobile and desktop */}
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5">
+        {/* Cover Image — Left column, spans full height */}
+        <div
+          className={cn(
+            "group relative rounded-2xl overflow-hidden bg-surface hover:shadow-lg transition-all duration-500",
+            isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          )}
+        >
+          <div className="relative aspect-[3/4] sm:aspect-[4/5] md:aspect-auto md:h-full min-h-[280px] sm:min-h-[350px] md:min-h-[400px]">
+            <Image
+              src={galleryImages[0].src}
+              alt={galleryImages[0].alt}
+              fill
+              priority
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
+            />
           </div>
-        ))}
+        </div>
+
+        {/* Right Column — 2x2 grid of 4 images */}
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5">
+          {galleryImages.slice(1).map((image, index) => (
+            <div
+              key={index}
+              className={cn(
+                "group relative rounded-2xl overflow-hidden bg-surface hover:shadow-lg transition-all duration-500",
+                isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              )}
+              style={{ transitionDelay: `${(index + 1) * 100}ms` }}
+            >
+              <div className="relative aspect-square">
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </Section>
   );
