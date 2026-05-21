@@ -12,10 +12,10 @@ const testimonials = [
     image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80",
   },
   {
-    name: "Emma Rodriguez",
-    role: "Bridal Styling",
+    name: "Olivia Tate",
+    role: "Volume Boost Treatment",
     review: "Volume and shine restored! My hair used to feel flat, but after their volumizing treatment, it's full, bouncy, and has that salon-fresh look every single day.",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&q=80",
+    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&q=80",
   },
   {
     name: "Jessica Chen",
@@ -30,10 +30,10 @@ const testimonials = [
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80",
   },
   {
-    name: "Olivia Tate",
-    role: "Volume Boost Treatment",
+    name: "Emma Rodriguez",
+    role: "Bridal Styling",
     review: "My wedding hair was the one thing I was stressed about. Sophia did a trial that made me cry happy tears. On the day, my updo stayed perfect through 12 hours of photos, ceremony, and dancing.",
-    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&q=80",
+    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&q=80",
   },
   {
     name: "Isabella Wren",
