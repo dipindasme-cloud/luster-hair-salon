@@ -77,18 +77,18 @@ export function Team() {
   const { ref, isInView } = useInView();
 
   return (
-    <Section ref={ref} id="team" className="bg-ivory">
+    <Section ref={ref} id="team" className="bg-background">
       <SectionHeading
         label="Your Stylists"
         title="Meet the Team"
         subtitle="Certified professionals who specialize in making you look incredible."
       />
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
         {team.map((member, index) => (
           <div
             key={member.name}
-            className={`group rounded-2xl bg-soft-cream border border-warm-beige/30 overflow-hidden hover:shadow-lg transition-all duration-500 ${
+            className={`group rounded-2xl bg-surface border border-border overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-500 ${
               isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
             style={{ transitionDelay: `${index * 120}ms` }}
@@ -102,8 +102,8 @@ export function Team() {
             </div>
 
             <div className="p-5">
-              <h3 className="text-lg font-serif text-charcoal mb-0.5">{member.name}</h3>
-              <p className="text-muted-rose text-sm font-medium mb-3">{member.role}</p>
+              <h3 className="text-xl font-serif font-medium text-foreground mb-0.5">{member.name}</h3>
+              <p className="text-accent-soft text-sm font-medium mb-3">{member.role}</p>
 
               <div className="flex flex-wrap gap-1.5 mb-4">
                 {member.specialties.map((spec) => {
@@ -111,7 +111,7 @@ export function Team() {
                   return (
                     <span
                       key={spec.name}
-                      className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium bg-charcoal/8 text-charcoal/70 rounded-full"
+                      className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium bg-foreground/8 text-foreground/70 rounded-full"
                     >
                       <Icon className="w-3 h-3" />
                       {spec.name}
@@ -120,7 +120,7 @@ export function Team() {
                 })}
               </div>
 
-              <div className="flex items-center justify-between pt-3 border-t border-warm-beige/30 text-xs text-charcoal/50">
+              <div className="flex items-center justify-between pt-3 border-t border-border/30 text-sm text-foreground/70">
                 <span>{member.experience}</span>
                 <span>{member.clients} clients</span>
               </div>

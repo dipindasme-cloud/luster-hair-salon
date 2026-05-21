@@ -19,7 +19,7 @@ const reasons = [
   {
     icon: Shield,
     title: "7-Day Satisfaction Guarantee",
-    description: "Not completely in love with your results? We&apos;ll adjust it within 7 days, no questions asked.",
+    description: "Not completely in love with your results? We'll adjust it within 7 days, no questions asked.",
   },
   {
     icon: Heart,
@@ -31,20 +31,24 @@ const reasons = [
 export function WhyChooseUs() {
   const { ref, isInView } = useInView();
 
+  const scrollToContact = () => {
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <Section ref={ref} className="bg-charcoal text-ivory">
+    <Section ref={ref} id="about" className="bg-foreground text-background">
       <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         <div className={`transition-all duration-700 ${isInView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"}`}>
-          <span className="inline-block text-muted-rose text-sm font-medium tracking-widest uppercase mb-4">
+          <span className="inline-block text-accent-soft text-sm font-semibold tracking-widest uppercase mb-4">
             Why Luster
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-medium leading-tight mb-6">
             The Details That
-            <span className="italic text-muted-rose"> Matter</span>
+            <span className="italic text-accent-soft"> Matter</span>
           </h2>
-          <p className="text-lg text-ivory/60 leading-relaxed mb-10">
-            We&apos;ve built our reputation on the things other salons overlook. 
-            From the products we use to the time we give each client, every detail 
+          <p className="text-lg text-background/80 leading-relaxed mb-10">
+            We've built our reputation on the things other salons overlook.
+            From the products we use to the time we give each client, every detail
             is designed around one goal: your best hair.
           </p>
 
@@ -57,20 +61,20 @@ export function WhyChooseUs() {
                 }`}
                 style={{ transitionDelay: `${300 + index * 150}ms` }}
               >
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-muted-rose/20 flex items-center justify-center">
-                  <reason.icon className="w-5 h-5 text-muted-rose" />
+                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-accent-soft/20 flex items-center justify-center">
+                  <reason.icon className="w-5 h-5 text-accent-soft" />
                 </div>
                 <div>
                   <h3 className="text-lg font-serif mb-1">{reason.title}</h3>
-                  <p className="text-ivory/60 text-sm leading-relaxed">{reason.description}</p>
+                  <p className="text-background/80 text-sm leading-relaxed">{reason.description}</p>
                 </div>
               </div>
             ))}
           </div>
 
           <div className={`mt-10 transition-all duration-500 delay-700 ${isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
-            <Button variant="outline" className="border-ivory/30 text-ivory hover:bg-ivory hover:text-charcoal group">
-              Book Your Visit
+            <Button variant="outlineLight" className="group" onClick={scrollToContact}>
+              Book Appointment
               <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
             </Button>
           </div>
@@ -85,18 +89,18 @@ export function WhyChooseUs() {
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="aspect-square rounded-2xl overflow-hidden bg-muted-rose/20 flex items-center justify-center p-6">
+            <div className="aspect-square rounded-2xl overflow-hidden bg-accent-soft/20 flex items-center justify-center p-6">
               <div className="text-center">
-                <div className="text-4xl md:text-5xl font-serif text-muted-rose">12+</div>
-                <div className="text-sm text-ivory/70 mt-2">Years of Excellence</div>
+                <div className="text-4xl md:text-5xl font-serif text-accent-soft">12+</div>
+                <div className="text-sm text-background/70 mt-2">Years of Excellence</div>
               </div>
             </div>
           </div>
           <div className="space-y-4 pt-8">
-            <div className="aspect-square rounded-2xl overflow-hidden bg-ivory/10 flex items-center justify-center p-6">
+            <div className="aspect-square rounded-2xl overflow-hidden bg-background/10 flex items-center justify-center p-6">
               <div className="text-center">
-                <div className="text-4xl md:text-5xl font-serif text-muted-rose">5K+</div>
-                <div className="text-sm text-ivory/70 mt-2">Happy Clients</div>
+                <div className="text-4xl md:text-5xl font-serif text-accent-soft">5K+</div>
+                <div className="text-sm text-background/70 mt-2">Happy Clients</div>
               </div>
             </div>
             <div className="aspect-[3/4] rounded-2xl overflow-hidden">

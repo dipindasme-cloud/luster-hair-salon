@@ -103,8 +103,12 @@ export function Services() {
     ? services
     : services.filter((s) => s.category === activeCategory);
 
+  const scrollToContact = () => {
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <Section ref={ref} id="services" className="bg-ivory">
+    <Section ref={ref} id="services" className="bg-background">
       <SectionHeading
         label="Services & Pricing"
         title="Find Your Perfect Service"
@@ -116,11 +120,12 @@ export function Services() {
           <button
             key={cat.value}
             onClick={() => setActiveCategory(cat.value)}
+            aria-pressed={activeCategory === cat.value}
             className={cn(
               "px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-sm font-medium transition-all duration-300 min-h-[44px]",
               activeCategory === cat.value
-                ? "bg-charcoal text-ivory"
-                : "bg-warm-beige/30 text-charcoal/70 hover:bg-warm-beige/50"
+                ? "bg-foreground text-background"
+                : "bg-border/30 text-foreground/70 hover:bg-border/50"
             )}
           >
             {cat.label}
@@ -128,12 +133,12 @@ export function Services() {
         ))}
       </div>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+      <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5 sm:gap-6">
         {filteredServices.map((service, index) => (
           <div
             key={service.name}
             className={cn(
-              "group rounded-2xl bg-soft-cream border border-warm-beige/30 overflow-hidden hover:border-muted-rose/50 hover:shadow-lg transition-all duration-500",
+              "group rounded-2xl bg-surface border border-border overflow-hidden hover:border-accent-soft/50 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-500",
               isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             )}
             style={{ transitionDelay: `${index * 80}ms` }}
@@ -144,28 +149,27 @@ export function Services() {
                 alt={service.name}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/50 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 to-transparent" />
               {service.popular && (
-                <span className="absolute top-3 right-3 px-3 py-1 text-xs font-medium bg-muted-rose text-white rounded-full">
+                <span className="absolute top-3 right-3 px-3 py-1 text-xs font-semibold bg-foreground text-background rounded-full">
                   Most Booked
                 </span>
               )}
             </div>
 
             <div className="p-5 sm:p-6">
-              <div className="flex items-start justify-between mb-2">
-                <h3 className="text-lg sm:text-xl font-serif text-charcoal">{service.name}</h3>
-              </div>
+              <h3 className="text-xl font-serif font-medium text-foreground mb-2">{service.name}</h3>
 
-              <p className="text-charcoal/60 text-sm mb-4">{service.result}</p>
+              <p className="text-[15px] text-foreground/75 leading-relaxed mb-4">{service.result}</p>
 
-              <div className="flex items-center gap-3 mb-4 pb-4 border-b border-warm-beige/30">
-                <div>
-                  <span className="text-2xl font-serif text-charcoal">
-                    {service.priceFrom ? "From " : ""}{service.price}
-                  </span>
+              <div className="flex items-center gap-3 mb-4 pb-4 border-b border-border/30">
+                <div className="flex items-baseline gap-1">
+                  {service.priceFrom && (
+                    <span className="text-sm text-foreground/60 font-sans">From </span>
+                  )}
+                  <span className="text-2xl font-serif font-medium text-foreground">{service.price}</span>
                 </div>
-                <span className="flex items-center gap-1 text-sm text-charcoal/50">
+                <span className="flex items-center gap-1 text-sm text-foreground/70">
                   <Clock className="w-3.5 h-3.5" />
                   {service.duration}
                 </span>
@@ -173,15 +177,15 @@ export function Services() {
 
               <ul className="space-y-2 mb-5">
                 {service.includes.map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-sm text-charcoal/70">
-                    <Check className="w-3.5 h-3.5 text-muted-rose flex-shrink-0" />
+                  <li key={item} className="flex items-center gap-2 text-sm text-foreground/80">
+                    <Check className="w-3.5 h-3.5 text-accent-soft flex-shrink-0" />
                     {item}
                   </li>
                 ))}
               </ul>
 
-              <Button variant="outline" size="sm" className="w-full group/btn">
-                Book Now
+              <Button variant="outline" size="sm" className="w-full group/btn" onClick={scrollToContact}>
+                Book Appointment
                 <ArrowRight className="ml-1.5 w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-1" />
               </Button>
             </div>

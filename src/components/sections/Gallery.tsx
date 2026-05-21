@@ -52,43 +52,45 @@ export function Gallery() {
   const { ref, isInView } = useInView();
 
   return (
-    <Section ref={ref} id="gallery" className="bg-ivory">
+    <Section ref={ref} id="gallery" className="bg-background">
       <SectionHeading
         label="Real Results"
         title="See the Transformations"
         subtitle="Every photo is an actual client result. Toggle between before and after."
       />
 
-      <div className="flex justify-center gap-3 mb-10">
+      <div className="flex justify-center gap-4 mb-10">
         <button
           onClick={() => setActiveView("before")}
+          aria-pressed={activeView === "before"}
           className={cn(
             "px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 min-h-[44px]",
             activeView === "before"
-              ? "bg-charcoal text-ivory"
-              : "bg-warm-beige/30 text-charcoal/70 hover:bg-warm-beige/50"
+              ? "bg-foreground text-background"
+              : "bg-border/30 text-foreground/70 hover:bg-border/50"
           )}
         >
           Before
         </button>
         <button
           onClick={() => setActiveView("after")}
+          aria-pressed={activeView === "after"}
           className={cn(
             "px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 min-h-[44px]",
             activeView === "after"
-              ? "bg-charcoal text-ivory"
-              : "bg-warm-beige/30 text-charcoal/70 hover:bg-warm-beige/50"
+              ? "bg-foreground text-background"
+              : "bg-border/30 text-foreground/70 hover:bg-border/50"
           )}
         >
           After
         </button>
       </div>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-5">
         {galleryItems.map((item, index) => (
           <div
             key={item.id}
-            className={`group rounded-2xl overflow-hidden bg-soft-cream border border-warm-beige/30 hover:shadow-lg transition-all duration-500 ${
+            className={`group rounded-2xl overflow-hidden bg-surface border border-border hover:shadow-lg hover:-translate-y-0.5 transition-all duration-500 ${
               isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
             style={{ transitionDelay: `${index * 100}ms` }}
@@ -99,13 +101,13 @@ export function Gallery() {
                 alt={`${item.label} - ${activeView}`}
                 className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/60 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
               <div className="absolute top-3 left-3">
                 <span className={cn(
                   "px-3 py-1 text-xs font-medium rounded-full",
                   activeView === "before"
-                    ? "bg-white/90 text-charcoal"
-                    : "bg-muted-rose text-white"
+                    ? "bg-white/90 text-foreground"
+                    : "bg-accent-soft text-white"
                 )}>
                   {activeView === "before" ? "Before" : "After"}
                 </span>

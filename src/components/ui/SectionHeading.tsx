@@ -10,21 +10,21 @@ interface SectionHeadingProps {
 
 export function SectionHeading({ label, title, subtitle, align = "center", className }: SectionHeadingProps) {
   return (
-    <div className={cn("mb-16", align === "center" ? "text-center" : "text-left", className)}>
+    <div className={cn("mb-12 md:mb-16", align === "center" ? "text-center" : "text-left", className)}>
       {label && (
-        <span className="inline-block text-muted-rose text-sm font-medium tracking-widest uppercase mb-4">
+        <span className="inline-block text-accent text-sm font-semibold tracking-widest uppercase mb-4">
           {label}
         </span>
       )}
-      <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-charcoal leading-tight">
+      <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-foreground leading-tight">
         {title}
       </h2>
       {subtitle && (
-        <p className="mt-6 text-lg text-charcoal/70 max-w-2xl mx-auto leading-relaxed">
+        <p className="mt-4 text-lg text-foreground/80 max-w-2xl mx-auto leading-relaxed">
           {subtitle}
         </p>
       )}
-      <div className={cn("mt-8 h-px w-16 bg-muted-rose", align === "center" ? "mx-auto" : "")} />
+      <div className={cn("mt-8 h-px w-16 bg-accent-soft", align === "center" ? "mx-auto" : "")} />
     </div>
   );
 }
