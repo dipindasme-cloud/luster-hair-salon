@@ -168,20 +168,9 @@ export function Services() {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [isHovered, setIsHovered] = useState(false);
   const [imageIndices, setImageIndices] = useState<number[]>(services.map(() => 0));
-  const [isMobile, setIsMobile] = useState(false);
-  
   // Swipe state
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  // Detect mobile
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
 
   const nextSlide = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % services.length);
@@ -257,16 +246,12 @@ export function Services() {
 
       {/* Carousel Container - Fixed height to prevent vibration */}
       <div
-        ref={containerRef}
         className="relative overflow-hidden"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
       >
         {/* Desktop: 3 cards in fixed frame */}
-        <div className="hidden md:block relative h-[580px]">
+        <div className="hidden md:block relative h-[520px]">
           <div className="absolute inset-0 flex items-center justify-center gap-6 lg:gap-8 max-w-5xl mx-auto px-4">
             {getVisibleCards().map(({ service, globalIndex, isActive }) => (
               <div
@@ -289,32 +274,34 @@ export function Services() {
           </div>
         </div>
 
-        {/* Mobile: 1 card with swipe */}
-        <div className="md:hidden max-w-sm mx-auto px-4">
-          <ServiceCard
-            service={services[currentIndex]}
-            isActive={true}
-            imageIndex={imageIndices[currentIndex]}
-            onPrevImage={() => updateImageIndex(currentIndex, "prev")}
-            onNextImage={() => updateImageIndex(currentIndex, "next")}
-            onSetImage={(idx) => updateImageIndex(currentIndex, "set", idx)}
-          />
+        {/* Mobile: Horizontal sliding frame */}
+        <div className="md:hidden overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-4 px-4 pb-2"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          <div className="flex gap-4 items-stretch">
+            {services.map((service, index) => (
+              <div
+                key={`${service.name}-${index}`}
+                className={cn(
+                  "snap-center shrink-0 w-[80vw] transition-opacity duration-300",
+                  currentIndex === index ? "opacity-100" : "opacity-60"
+                )}
+              >
+                <ServiceCard
+                  service={service}
+                  isActive={currentIndex === index}
+                  imageIndex={imageIndices[index]}
+                  onPrevImage={() => updateImageIndex(index, "prev")}
+                  onNextImage={() => updateImageIndex(index, "next")}
+                  onSetImage={(idx) => updateImageIndex(index, "set", idx)}
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Time Indicator (Non-interactive) */}
-        <div className="flex justify-center gap-2 mt-8">
-          {services.map((_, index) => (
-            <div
-              key={index}
-              className={cn(
-                "h-1.5 rounded-full transition-all duration-300",
-                currentIndex === index
-                  ? "bg-foreground w-8"
-                  : "bg-foreground/20 w-4"
-              )}
-            />
-          ))}
-        </div>
       </div>
     </Section>
   );

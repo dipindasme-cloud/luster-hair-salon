@@ -91,3 +91,11 @@ textarea:focus-visible {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+@utility scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
