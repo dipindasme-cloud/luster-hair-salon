@@ -9,9 +9,10 @@ const navLinks = [
   { label: "Services", href: "#services" },
   { label: "About", href: "#about" },
   { label: "Team", href: "#team" },
-  { label: "Gallery", href: "#gallery" },
   { label: "FAQ", href: "#faq" },
-  { label: "Contact", href: "#contact" },
+  { label: "Gallery", href: "#gallery" },
+  { label: "Reviews", href: "#reviews" },
+  { label: "Process", href: "#process" },
 ];
 
 export function Header() {
@@ -120,7 +121,7 @@ export function Header() {
             );
           })}
           <Button variant={isScrolled ? "primary" : "inverse"} size="sm" className="ml-6">
-            Book Appointment
+            Contact Us
           </Button>
         </nav>
 
