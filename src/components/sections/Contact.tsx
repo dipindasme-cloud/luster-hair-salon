@@ -72,69 +72,86 @@ export function Contact() {
     <Section ref={ref} id="contact" className="bg-foreground text-background">
       <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
         <div className={`transition-all duration-500 ${isInView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}>
-          <span className="inline-block text-accent-soft text-sm font-semibold tracking-widest uppercase mb-4">
-            Book Now
-          </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-medium leading-tight mb-6">
-            Ready for Your
-            <span className="italic text-accent-soft"> Transformation?</span>
-          </h2>
-          <p className="text-lg text-background/80 leading-relaxed mb-10">
-            Book your appointment today. New clients receive a complimentary
-            consultation with their first visit.
-          </p>
+          <div className="w-full h-full bg-[#f8f5f2] rounded-3xl p-8 md:p-12 flex flex-col gap-8">
+  {/* Top Content */}
+  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+    
+    {/* Heading */}
+    <div className="max-w-2xl">
+      <h2 className="text-3xl md:text-5xl font-semibold text-[#1f1f1f] leading-tight">
+        Get in touch with Luster experts
+      </h2>
+    </div>
 
-          <div className="grid sm:grid-cols-2 gap-6 mb-8">
-            {contactInfo.map((info) => (
-              <div key={info.label} className="flex gap-3">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-background/10 flex items-center justify-center">
-                  <info.icon className="w-4 h-4 text-accent-soft" />
-                </div>
-                <div>
-                  <div className="text-xs text-accent-soft mb-1">{info.label}</div>
-                  <div className="text-background/80 whitespace-pre-line text-[15px] leading-relaxed">{info.value}</div>
-                </div>
-              </div>
-            ))}
-          </div>
+    
+  </div>
 
-          <a
-            href="https://maps.google.com/?q=123+Elegance+Avenue+Beverly+Hills+CA+90210"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm text-accent-soft hover:text-background transition-colors mb-10"
-          >
-            <MapPin className="w-3.5 h-3.5" />
-            Get Directions
-          </a>
+  {/* Review Card */}
+  <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-neutral-200 max-w-2xl">
+    
+    {/* Stars */}
+    <div className="flex items-center gap-1 mb-5">
+      {[...Array(5)].map((_, i) => (
+        <svg
+          key={i}
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 256 256"
+          className="w-5 h-5 fill-orange-400"
+        >
+          <path d="M234.29,114.85l-45,38.83L203,211.75a16.4,16.4,0,0,1-24.5,17.82L128,198.49,77.47,229.57A16.4,16.4,0,0,1,53,211.75l13.76-58.07-45-38.83A16.46,16.46,0,0,1,31.08,86l59-4.76,22.76-55.08a16.36,16.36,0,0,1,30.27,0l22.75,55.08,59,4.76a16.46,16.46,0,0,1,9.37,28.86Z" />
+        </svg>
+      ))}
+    </div>
 
-          <div className="flex flex-wrap gap-3">
-            <Button variant="inverse" size="lg" className="group" onClick={() => document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" })}>
-              Book Appointment
-              <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
-            </Button>
-            <a
-              href="tel:+13105550189"
-              className="inline-flex items-center justify-center px-9 py-4 text-base sm:text-lg font-semibold tracking-wide rounded-full border-2 border-background/50 text-background hover:bg-background hover:text-foreground transition-all duration-300 min-h-[48px]"
-            >
-              <Phone className="mr-2 w-4 h-4" />
-              Call Us
-            </a>
-          </div>
+    {/* Review Text */}
+    <p className="text-neutral-600 text-base md:text-lg leading-relaxed mb-6">
+      The team at Luster truly understands hair! From consultation
+      to styling, they made me feel confident and beautiful.
+    </p>
+
+    {/* User */}
+    <div className="flex items-center gap-4">
+      
+      {/* Profile */}
+      <div className="w-14 h-14 rounded-full overflow-hidden">
+        <img
+          src="https://framerusercontent.com/images/tOD4UiwN4XShQxBFw0V7t06FA.jpg"
+          alt="Emma Rose"
+          className="w-full h-full object-cover"
+        />
+      </div>
+
+      {/* Info */}
+      <div>
+        <h4 className="text-[#1f1f1f] font-semibold">
+          Emma Rose
+        </h4>
+
+        <p className="text-sm text-neutral-500">
+          Hair styling and color
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+
+    
         </div>
 
         <div className={`transition-all duration-500 delay-200 ${isInView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4"}`}>
-          <div className="bg-background/5 rounded-2xl p-6 sm:p-8 border border-background/10">
-            <h3 className="text-xl font-serif mb-6">Request an Appointment</h3>
+          <div className="bg-background/5 rounded-2xl p-6 sm:p-8 border border-background/10 h-full flex flex-col">
+            
 
             {formState === "success" ? (
-              <div className="text-center py-12">
+              <div className="text-center flex-grow flex flex-col items-center justify-center">
                 <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-4" />
                 <h4 className="text-2xl font-serif text-background mb-2">Request Received!</h4>
                 <p className="text-background/70">We'll contact you within 24 hours to confirm your appointment.</p>
               </div>
             ) : (
-              <form id="contact-form" className="space-y-4" onSubmit={handleSubmit} noValidate>
+              <form id="contact-form" className="space-y-4 flex flex-col flex-grow" onSubmit={handleSubmit} noValidate>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <FormField label="Name" required error={errors.name}>
                     <FormInput
@@ -183,9 +200,9 @@ export function Contact() {
                     error={errors.service}
                   >
                     <option value="" className="bg-foreground">Select a service</option>
-                    <option value="cut" className="bg-foreground">Signature Cut & Style</option>
-                    <option value="balayage" className="bg-foreground">Balayage & Highlights</option>
-                    <option value="color" className="bg-foreground">Full Color</option>
+                    <option value="cut" className="bg-foreground">Deep Conditioning</option>
+                    <option value="balayage" className="bg-foreground">Precision Haircuts</option>
+                    <option value="color" className="bg-foreground">Hair Coloring</option>
                     <option value="keratin" className="bg-foreground">Keratin Smoothing</option>
                     <option value="bridal" className="bg-foreground">Bridal Package</option>
                     <option value="scalp" className="bg-foreground">Scalp Revival</option>
@@ -201,13 +218,11 @@ export function Contact() {
                   />
                 </FormField>
 
-                <p className="text-background/50 text-xs text-center leading-relaxed">
-                  This is a request, not a confirmed booking. We'll call or text you within 24 hours to confirm your date and time.
-                </p>
+                
 
                 <Button
                   size="lg"
-                  className="w-full group"
+                  className="w-full group mt-auto"
                   type="submit"
                   disabled={formState === "submitting"}
                   variant="inverse"
@@ -215,18 +230,11 @@ export function Contact() {
                   {formState === "submitting" ? (
                     <>Sending... <Loader2 className="ml-2 w-5 h-5 animate-spin" /></>
                   ) : (
-                    <>Send Booking Request <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" /></>
+                    <>Submit Your Form <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" /></>
                   )}
                 </Button>
 
-                <div className="flex items-center justify-center gap-4 pt-2">
-                  <div className="flex items-center gap-1.5 text-background/40 text-xs">
-                    <Shield className="w-3 h-3" />
-                    <span>7-day satisfaction guarantee</span>
-                  </div>
-                  <span className="text-background/20">·</span>
-                  <span className="text-background/40 text-xs">Your info is never shared</span>
-                </div>
+                
               </form>
             )}
           </div>
