@@ -281,8 +281,8 @@ export function Services() {
         </span>
 
         <h2 className="mb-5 text-3xl font-medium leading-tight text-foreground md:text-4xl lg:text-5xl">
-          Expert Premium Hair Services
-          <span className="block italic text-accent-soft">Tailored for You</span>
+          Expert Premium Hair Services{" "}
+          <span className="block italic text-accent-soft md:inline">Tailored for You</span>
         </h2>
 
         <p className="mx-auto max-w-xl text-base leading-relaxed text-foreground/80 md:text-lg">
@@ -298,55 +298,55 @@ export function Services() {
         <div className="hidden md:block relative h-[410px] lg:h-[430px]">
           <div className="absolute inset-0 mx-auto flex max-w-5xl items-center justify-center gap-5 px-4 lg:gap-6">
             {getVisibleCards().map(({ service, globalIndex, isActive }) => (
-              <div
-                key={`${service.name}-${globalIndex}`}
-                className={cn(
-                  "h-full flex-shrink-0 transition-all duration-300",
-                  isActive
-                    ? "w-[330px] lg:w-[360px] scale-100 opacity-100"
-                    : "w-[270px] lg:w-[290px] scale-[0.94] opacity-75"
-                )}
-              >
-                <ServiceCard
-                  service={service}
-                  isActive={isActive}
-                  imageIndex={imageIndices[globalIndex]}
-                  onPrevImage={() => updateImageIndex(globalIndex, "prev")}
-                  onNextImage={() => updateImageIndex(globalIndex, "next")}
-                  onSetImage={(idx) => updateImageIndex(globalIndex, "set", idx)}
-                />
-              </div>
-            ))}
+  <div
+    key={`${service.name}-${globalIndex}`}
+    onClick={() => {
+      if (!isActive) setCurrentIndex(globalIndex);
+    }}
+    className={cn(
+      "h-full flex-shrink-0 transition-all duration-300",
+      isActive
+        ? "w-[330px] lg:w-[360px] scale-100 opacity-100"
+        : "w-[270px] lg:w-[290px] scale-[0.94] opacity-75 cursor-pointer"
+    )}
+  >
+    <ServiceCard
+      service={service}
+      isActive={isActive}
+      imageIndex={imageIndices[globalIndex]}
+      onPrevImage={() => updateImageIndex(globalIndex, "prev")}
+      onNextImage={() => updateImageIndex(globalIndex, "next")}
+      onSetImage={(idx) => updateImageIndex(globalIndex, "set", idx)}
+    />
+  </div>
+))}
           </div>
         </div>
 
         <div
-          className="md:hidden overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-4 px-4 pb-2"
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
-          <div className="flex items-stretch gap-4 pr-4">
-            {services.map((service, index) => (
-              <div
-                key={`${service.name}-${index}`}
-                className={cn(
-                  "snap-center shrink-0 w-[80vw] transition-all duration-300",
-                  currentIndex === index ? "opacity-100 scale-100" : "opacity-75 scale-[0.98]"
-                )}
-              >
-                <ServiceCard
-                  service={service}
-                  isActive={currentIndex === index}
-                  imageIndex={imageIndices[index]}
-                  onPrevImage={() => updateImageIndex(index, "prev")}
-                  onNextImage={() => updateImageIndex(index, "next")}
-                  onSetImage={(idx) => updateImageIndex(index, "set", idx)}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
+  className="md:hidden overflow-x-auto px-4 pr-4 pb-2 scrollbar-hide snap-x snap-mandatory scroll-pr-4"
+  onTouchStart={handleTouchStart}
+  onTouchMove={handleTouchMove}
+  onTouchEnd={handleTouchEnd}
+>
+  <div className="flex items-stretch gap-4 pr-4">
+    {services.map((service, index) => (
+      <div
+        key={`${service.name}-${index}`}
+        className="w-[80vw] shrink-0 snap-start"
+      >
+        <ServiceCard
+          service={service}
+          isActive={true}
+          imageIndex={imageIndices[index]}
+          onPrevImage={() => updateImageIndex(index, "prev")}
+          onNextImage={() => updateImageIndex(index, "next")}
+          onSetImage={(idx) => updateImageIndex(index, "set", idx)}
+        />
+      </div>
+    ))}
+  </div>
+</div>
 
         
       </div>

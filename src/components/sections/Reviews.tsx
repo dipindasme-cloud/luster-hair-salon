@@ -112,9 +112,10 @@ export function Reviews() {
           Client Reviews
         </span>
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-foreground leading-tight mb-6">
-          Real Stories From
-          <span className="block italic text-accent-soft">Real Clients</span>
+          Real Stories From{" "}
+          <span className="block italic text-accent-soft md:inline">Real Clients</span>
         </h2>
+        
         <p className="text-lg text-foreground/80 max-w-xl mx-auto leading-relaxed">
           Don&apos;t take our word for it — hear what our clients have to say about their Luster experience.
         </p>
