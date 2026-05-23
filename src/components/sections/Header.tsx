@@ -8,11 +8,11 @@ import { cn } from "@/lib/utils";
 const navLinks = [
   { label: "Services", href: "#services" },
   { label: "About", href: "#about" },
+  { label: "Process", href: "#process" },
   { label: "Team", href: "#team" },
   { label: "FAQ", href: "#faq" },
   { label: "Gallery", href: "#gallery" },
   { label: "Reviews", href: "#reviews" },
-  { label: "Process", href: "#process" },
 ];
 
 export function Header() {
@@ -68,6 +68,16 @@ export function Header() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  // Helper function to handle button click scrolling smoothly
+  const handleContactClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsMenuOpen(false);
+    const contactSection = document.getElementById("contact");
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <header
       className={cn(
@@ -120,9 +130,12 @@ export function Header() {
               </a>
             );
           })}
-          <Button variant={isScrolled ? "primary" : "inverse"} size="sm" className="ml-6">
-            Contact Us
-          </Button>
+          {/* Desktop Contact Button wrapped in an anchor element */}
+          <a href="#contact" onClick={handleContactClick} className="ml-6">
+            <Button variant={isScrolled ? "primary" : "inverse"} size="sm">
+              Contact Us
+            </Button>
+          </a>
         </nav>
 
         <button
@@ -195,10 +208,13 @@ export function Header() {
             ))}
           </nav>
 
-          <div className="px-5 pb-6 sm:px-6 sm:pb-8">
-            <Button size="lg" className="w-full" onClick={() => setIsMenuOpen(false)}>
-              Book Appointment
-            </Button>
+          {/* Mobile Contact Drawer Button wrapped in an anchor element */}
+          <div className="px-5 pb-6 sm:px-6 sm:pb-8 mt-4">
+            <a href="#contact" onClick={handleContactClick}>
+              <Button size="lg" className="w-full">
+                Contact Us
+              </Button>
+            </a>
           </div>
 
           <div className="px-5 pb-5 sm:px-6 sm:pb-6 text-center">

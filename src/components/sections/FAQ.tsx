@@ -53,20 +53,6 @@ export function FAQ() {
           <Accordion items={faqs} />
         </div>
 
-        <div className="text-center">
-          <p className="text-foreground/75 mb-4">Still have questions?</p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a
-              href="tel:+13105550189"
-              className="inline-flex items-center justify-center px-7 py-3.5 text-base font-semibold tracking-wide rounded-full border-2 border-foreground text-foreground hover:bg-foreground hover:text-background transition-all duration-300 min-h-[44px]"
-            >
-              Call Us: (310) 555-0189
-            </a>
-            <Button variant="outline" onClick={scrollToContact}>
-              Or send us a message
-            </Button>
-          </div>
-        </div>
       </div>
     </Section>
   );

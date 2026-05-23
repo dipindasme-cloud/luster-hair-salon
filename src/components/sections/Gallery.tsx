@@ -40,12 +40,13 @@ export function Gallery() {
           Gallery
         </span>
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-foreground leading-tight mb-6">
-          Real Transformations,
-          <span className="block italic text-accent-soft">Real Results</span>
+          Real Transformations,{" "}
+          <span className="block italic text-accent-soft md:inline">Real Results</span>
         </h2>
         <p className="text-lg text-foreground/80 max-w-xl mx-auto leading-relaxed">
           Every photo is a real client. Follow us on Instagram for daily inspiration.
         </p>
+        
 
         <div className="mt-8">
           <Link

@@ -31,17 +31,7 @@ export function Footer() {
               </p>
             </div>
 
-            <div className="md:text-right">
-              <button
-                onClick={scrollToContact}
-                className="w-full md:w-auto inline-flex items-center justify-center px-8 py-4 bg-white text-foreground font-semibold tracking-wide rounded-full hover:bg-accent-soft hover:text-white transition-all duration-300 text-base min-h-[48px]"
-              >
-                Book Appointment
-              </button>
-              <p className="text-background/40 text-xs mt-3">
-                Free consultation for new clients
-              </p>
-            </div>
+            
           </div>
         </div>
 

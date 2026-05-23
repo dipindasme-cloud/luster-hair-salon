@@ -81,7 +81,7 @@ export function Team() {
   };
 
   return (
-    <Section ref={ref} id="team" className="bg-background">
+    <Section ref={ref} id="team" className="bg-surface">
       <SectionHeading
         label="Your Stylists"
         title="Meet the Team"
@@ -92,7 +92,7 @@ export function Team() {
         {team.map((member, index) => (
           <div
             key={member.name}
-            className={`group rounded-2xl bg-surface border border-border overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-500 ${
+            className={`group rounded-2xl bg-background border border-border overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-500 ${
               isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
             style={{ transitionDelay: `${index * 120}ms` }}

@@ -72,7 +72,7 @@ export function Contact() {
     <Section ref={ref} id="contact" className="bg-foreground text-background">
       <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
         <div className={`transition-all duration-500 ${isInView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}>
-          <div className="w-full h-full bg-[#f8f5f2] rounded-3xl p-8 md:p-12 flex flex-col gap-8">
+          <div className="w-full h-full bg-[#f8f5f2] rounded-3xl p-8 md:p-12 flex flex-col gap-4 md:gap-6 lg:gap-10">
   {/* Top Content */}
   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
     
@@ -96,7 +96,7 @@ export function Contact() {
           key={i}
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 256 256"
-          className="w-5 h-5 fill-orange-400"
+          className="w-5 h-5 fill-bg-ground"
         >
           <path d="M234.29,114.85l-45,38.83L203,211.75a16.4,16.4,0,0,1-24.5,17.82L128,198.49,77.47,229.57A16.4,16.4,0,0,1,53,211.75l13.76-58.07-45-38.83A16.46,16.46,0,0,1,31.08,86l59-4.76,22.76-55.08a16.36,16.36,0,0,1,30.27,0l22.75,55.08,59,4.76a16.46,16.46,0,0,1,9.37,28.86Z" />
         </svg>
@@ -148,7 +148,7 @@ export function Contact() {
               <div className="text-center flex-grow flex flex-col items-center justify-center">
                 <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-4" />
                 <h4 className="text-2xl font-serif text-background mb-2">Request Received!</h4>
-                <p className="text-background/70">We'll contact you within 24 hours to confirm your appointment.</p>
+                <p className="text-background/70">We will contact you within 24 hours to confirm your appointment.</p>
               </div>
             ) : (
               <form id="contact-form" className="space-y-4 flex flex-col flex-grow" onSubmit={handleSubmit} noValidate>
